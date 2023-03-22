@@ -38,6 +38,12 @@ end
 #     deletions
 # end
 
+# Built in method easy solution:
+# squeeze: reduces substrings of a string of identical chars to a single char, case sensitive
+# def min_removals(s)
+#    s.size - s.squeeze.size
+# end
+
 
 fptr = File.open(ENV['OUTPUT_PATH'], 'w')
 
