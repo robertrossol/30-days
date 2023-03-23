@@ -13,13 +13,10 @@ require 'stringio'
 def isValid(s)
     # Write your code here
     char_count = s.chars.each.with_object(Hash.new(0)) {|char, hsh| hsh[char] += 1}
-    duplicates = char_count.values.select {|val| val > 1}
-    if duplicates.any?{|val| val > 2} || duplicates.size > 1
-        "NO"
-    else
-        "YES"
-    end
-    # char_count.any? {|val| val > 2} || char_count.select
-    # char_count.values.select {|val| val > 1}.reduce(&:+) > 2 ? "NO" : "YES"
+    lengths = char_count.values.uniq
+    # if (lengths.size > 2 || char_count.values.count(lengths.max) != 1)
+    return "NO" unless (lengths.size <= 2 && (lengths.max-lengths.min <= 1) && (char_count.values.count(lengths.max) == 1 || char_count.values.count(lengths.min) == 1 ))
+    return "YES"
 end
+
 
