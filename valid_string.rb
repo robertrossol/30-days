@@ -14,9 +14,9 @@ def isValid(s)
     # Write your code here
     char_count = s.chars.each.with_object(Hash.new(0)) {|char, hsh| hsh[char] += 1}
     lengths = char_count.values.uniq
-    # if (lengths.size > 2 || char_count.values.count(lengths.max) != 1)
-    return "NO" unless (lengths.size <= 2 && (lengths.max-lengths.min <= 1) && (char_count.values.count(lengths.max) == 1 || char_count.values.count(lengths.min) == 1 ))
-    return "YES"
+    lengths_count = lengths.map { |len| [len, char_count.values.count(len)]}.to_h
+    return "NO" unless (lengths.size == 1 || (lengths.size == 2 && ((lengths_count[1] == 1) || ((lengths_count[lengths.max] == 1) && (lengths.max - lengths.min == 1)))))
+    "YES"
 end
 
 
