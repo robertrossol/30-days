@@ -10,34 +10,23 @@ require 'stringio'
 #
 
 def minimumBribes(q)
-  offsets = q.map.with_index do |int, idx|
-    int - (idx + 1)
-  end
+  t = Time.now
   bribes = 0
-  if offsets.max > 2
-    puts "Too chaotic"
-    return
-  end
-  count = 0
-  until offsets.all?(0)
-    count +=1
-    return if count > 10
-    p offsets
-    min = offsets.min 
-    index_of_min = offsets.index(min)
-    new_pos = index_of_min + min
-    offsets[new_pos...index_of_min] = offsets[new_pos...index_of_min].map{|num| num -1}
-    offsets.delete_at(index_of_min)
-    offsets.insert((new_pos),0)
-    bribes += min.abs
-    p offsets
-  # offsets[index_of_min + min..index_of_min]
+  (q.size-1).downto(0).each do |index|
+    offset = (q[index] - (index + 1))
+    if offset > 2
+      puts "Too chaotic"
+      return
+    else
+      x = ([q[index]-2, 0].max..index).select{|num| q[num] > q[index]}.count
+      bribes += x
+      # Alternative to the above two lines
+      # ([q[index]-2, 0].max..index).each{|num| bribes += 1 if q[num] > q[index]}
+    end
   end
   puts bribes
-  return
+  puts Time.now - t
 end
-
-
 
 t = gets.strip.to_i
 
