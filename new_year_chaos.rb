@@ -1,41 +1,43 @@
-# [5, 1, 2, 3, 7, 8, 6, 4]
+#!/bin/ruby
+
+require 'json'
+require 'stringio'
+
+#
+# Complete the 'minimumBribes' function below.
+#
+# The function accepts INTEGER_ARRAY q as parameter.
+#
 
 def minimumBribes(q)
-  # Write your code here
-  if q.map.with_index {|num, idx| num - 3 > idx}.any?
+  offsets = q.map.with_index do |int, idx|
+    int - (idx + 1)
+  end
+  bribes = 0
+  if offsets.max > 2
     puts "Too chaotic"
     return
   end
-  bribes = 0
-  new_arr = q.dup
-  while new_arr != q.sort
-    # break if bribes < 0
-      new_arr.each.with_index do |int, idx|
-        # break if bribes < 0
-        p new_arr
-        while new_arr[idx] != idx + 1 && bribes >= 0
-          int = new_arr[idx]
-          offset = (idx - (int -1)) * -1
-          p offset
-          # if offset < -2 || offset > 2
-          #     # bribes = "Too chaotic"
-          #     bribes = -100
-          #     break
-          # else
-              new_arr.insert(idx + offset, new_arr.delete_at(idx))
-              bribes += offset.abs
-              break if new_arr == q.sort
-          # end
-        end
-      end
+  count = 0
+  until offsets.all?(0)
+    count +=1
+    return if count > 10
+    p offsets
+    min = offsets.min 
+    index_of_min = offsets.index(min)
+    new_pos = index_of_min + min
+    offsets[new_pos...index_of_min] = offsets[new_pos...index_of_min].map{|num| num -1}
+    offsets.delete_at(index_of_min)
+    offsets.insert((new_pos),0)
+    bribes += min.abs
+    p offsets
+  # offsets[index_of_min + min..index_of_min]
   end
-  # bribes = 3 if bribes == ""
-  if bribes < 0
-      puts "Too chaotic" 
-  else
-      puts bribes
-  end
+  puts bribes
+  return
 end
+
+
 
 t = gets.strip.to_i
 
