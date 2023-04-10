@@ -15,9 +15,11 @@ def checkMagazine(magazine, note)
     a = [magazine, note].map do |arr|
        arr.each.with_object(Hash.new(0)) {|word, hash| hash[word] += 1 } 
     end
+
+    magazines, notes = a[0], a[1]
     
-    a[1].each do |word, count|
-        if a[0][word] < count
+    notes.each do |word, count|
+        if magazines[word] < count
             puts "No"
             return 0
         end
