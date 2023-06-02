@@ -14,6 +14,7 @@ matrix2 = [
   [13, 22, 21, 20, 7],
   [12, 11, 10, 9, 8]
 ]
+
 def walk_matrix(matrix)
   path = []
 
@@ -39,3 +40,4 @@ end
 
 p walk_matrix(matrix)
 p walk_matrix(matrix2)
+p walk_matrix(matrix3)
